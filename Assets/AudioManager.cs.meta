@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 69f8c36e63eb9f1419f00f36825290d9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - explosionClip: {fileID: 8300000, guid: 2c3b65bdd0885f04e85103d765557577, type: 3}
+  - coinClip: {fileID: 8300000, guid: 6a6edf73bc6b00e4cae14c5472774902, type: 3}
+  - gameOverClip: {fileID: 8300000, guid: 83e3b2ca817993c458123f23e75156e7, type: 3}
+  - musicClip: {fileID: 8300000, guid: 1e2795a973ef79b44a6fb2259d8caf43, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

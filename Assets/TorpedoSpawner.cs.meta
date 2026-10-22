@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 16d43340ad85e6d41a0390f8bdc4b974
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - torpedoPrefab: {fileID: 3827383411061734860, guid: eefb24c3274aea349a39db1a042e1a92, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
