@@ -115,7 +115,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+      maxColor: {r: 1, g: 0.69926083, b: 0.65882355, a: 0.78431374}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -2346,9 +2346,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c7353a02302c6f41904a1668a0f18eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HomingTorpedo
-  speed: 12
-  rotateSpeed: 120
-  lifetime: 10
+  speed: 6
+  typeName: Normal
+  warningColor: {r: 1, g: 1, b: 1, a: 1}
+  rotateSpeed: 90
+  lifetime: 20
   explosionPrefab: {fileID: 9218443758430896778, guid: b66adedf4df8ec84084cbac8e30b6018, type: 3}
 --- !u!54 &1631563625132819970
 Rigidbody:

@@ -4,6 +4,9 @@ public class HomingTorpedo : MonoBehaviour
 {
     [Header("Torpedo Settings")]
     public float speed = 6f;
+    [Header("Type Info")]
+    public string typeName = "Normal";
+    public Color warningColor = Color.white; // used for the warning arrows in Week 10
     public float rotateSpeed = 90f;
     public float lifetime = 20f;
 
