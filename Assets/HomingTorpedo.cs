@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class HomingTorpedo : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class HomingTorpedo : MonoBehaviour
 
     private Transform player;
     private bool exploded;
+
+    public static readonly List<HomingTorpedo> Active = new List<HomingTorpedo>();
+
+    void OnEnable()  { Active.Add(this); }
+    void OnDisable() { Active.Remove(this); }
 
     void Start()
     {

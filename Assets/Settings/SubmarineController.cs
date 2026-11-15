@@ -1,31 +1,50 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SubmarineController : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 8f;
     public float turnSpeed = 180f;
+    public float inputSmoothing = 8f; // higher = snappier steering
 
-    public float arenaRadius = 60f; // set to 0 to disable
+    [HideInInspector] public float speedMultiplier = 1f; // used by skins and power-ups in Week 11
+
+    private float currentTurn;
+
     void Update()
     {
-        float turnInput = Input.GetAxis("Horizontal");
-        transform.Rotate(Vector3.up * turnInput * turnSpeed * Time.deltaTime);
+        float target = GetTurnInput();
+        currentTurn = Mathf.MoveTowards(currentTurn, target, inputSmoothing * Time.deltaTime);
 
-        // Soft boundary: outside the arena, the submarine turns back toward the center
-        if (arenaRadius > 0f)
+        transform.Rotate(Vector3.up * currentTurn * turnSpeed * Time.deltaTime);
+        transform.Translate(Vector3.forward * moveSpeed * speedMultiplier * Time.deltaTime);
+    }
+
+    float GetTurnInput()
+    {
+        float input = Input.GetAxis("Horizontal"); // keyboard
+
+        // Touch: left half = turn left, right half = turn right
+        if (Input.touchCount > 0)
         {
-            Vector3 fromCenter = transform.position;
-            fromCenter.y = 0f;
-
-            if (fromCenter.magnitude > arenaRadius)
+            float dir = 0f;
+            foreach (Touch t in Input.touches)
             {
-                Quaternion toCenter = Quaternion.LookRotation(-fromCenter);
-                transform.rotation = Quaternion.RotateTowards(
-                    transform.rotation, toCenter, turnSpeed * 0.5f * Time.deltaTime);
+                if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled) continue;
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(t.fingerId)) continue; // ignore touches on buttons
+
+                dir += t.position.x < Screen.width / 2f ? -1f : 1f;
             }
+            return Mathf.Clamp(dir, -1f, 1f);
         }
 
-        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+#if UNITY_EDITOR
+        // Mouse testing in the Editor
+        if (Input.GetMouseButton(0) && (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject()))
+            return Input.mousePosition.x < Screen.width / 2f ? -1f : 1f;
+#endif
+
+        return input;
     }
 }

@@ -7,9 +7,14 @@ public class MainMenu : MonoBehaviour
     public TextMeshProUGUI highScoreText;
     public string gameSceneName = "SampleScene";
 
+    public GameObject quitButton;
+
     void Start()
     {
         Time.timeScale = 1f;
+
+        if (quitButton != null && Application.isMobilePlatform)
+            quitButton.SetActive(false);
 
         if (highScoreText != null)
             highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0);

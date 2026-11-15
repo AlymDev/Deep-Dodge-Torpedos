@@ -441,6 +441,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 975761846}
   - {fileID: 1125092500}
   - {fileID: 1011614147}
   - {fileID: 465343128}
@@ -582,9 +583,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7f108bf864ee3942af02ee5a74c040b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubmarineController
-  moveSpeed: 8
+  moveSpeed: 10
   turnSpeed: 180
-  arenaRadius: 60
+  inputSmoothing: 8
+  speedMultiplier: 1
 --- !u!54 &86015805
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4619,25 +4621,18 @@ MonoBehaviour:
   - name: Normal
     prefab: {fileID: 3827383411061734860, guid: eefb24c3274aea349a39db1a042e1a92, type: 3}
     unlockTime: 0
-    startWeight: 10
-    endWeight: 4
   - name: Fast
     prefab: {fileID: 6630034319958020541, guid: 826c8bfc31d6a2f4ea8ca7461362949e, type: 3}
-    unlockTime: 25
-    startWeight: 0
-    endWeight: 5
+    unlockTime: 15
   - name: Heavy
     prefab: {fileID: 7808750311523751847, guid: c798f9be8b1a36e43aca70b88fb1b52a, type: 3}
-    unlockTime: 50
-    startWeight: 2
-    endWeight: 4
+    unlockTime: 25
   - name: Hunter
     prefab: {fileID: 4969449753544510589, guid: 87581f1648c5fce408c26005b283ec60, type: 3}
-    unlockTime: 80
-    startWeight: 0
-    endWeight: 3
+    unlockTime: 35
   spawnDistance: 20
   firstSpawnDelay: 2
+  replacePreviousTypes: 1
   startInterval: 3
   minInterval: 1
   maxSpeedMultiplier: 1.6
@@ -5240,6 +5235,60 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &975761845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 975761846}
+  - component: {fileID: 975761847}
+  m_Layer: 5
+  m_Name: WarningArrows
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &975761846
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975761845}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 64530589}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 1, y: 0}
+--- !u!114 &975761847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975761845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a20401691325cf4fba723d637434368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WarningArrows
+  arrowPrefab: {fileID: 6629861935902750485, guid: dcde0c627af6cf74abc60c5e044e5ab4, type: 3}
+  cam: {fileID: 330585545}
+  edgePadding: 50
+  maxWarnDistance: 45
+  nearDistance: 10
+  pulseSpeed: 10
 --- !u!1 &983376655
 GameObject:
   m_ObjectHideFlags: 0

@@ -84,6 +84,18 @@ PrefabInstance:
       propertyPath: rotateSpeed
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 5890983782136044960, guid: eefb24c3274aea349a39db1a042e1a92, type: 3}
+      propertyPath: warningColor.b
+      value: 0.0962285
+      objectReference: {fileID: 0}
+    - target: {fileID: 5890983782136044960, guid: eefb24c3274aea349a39db1a042e1a92, type: 3}
+      propertyPath: warningColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5890983782136044960, guid: eefb24c3274aea349a39db1a042e1a92, type: 3}
+      propertyPath: warningColor.r
+      value: 0.72156864
+      objectReference: {fileID: 0}
     - target: {fileID: 8031673900222014162, guid: eefb24c3274aea349a39db1a042e1a92, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

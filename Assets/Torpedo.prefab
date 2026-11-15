@@ -2348,7 +2348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HomingTorpedo
   speed: 6
   typeName: Normal
-  warningColor: {r: 1, g: 1, b: 1, a: 1}
+  warningColor: {r: 0, g: 0.7207546, b: 0.086118825, a: 1}
   rotateSpeed: 90
   lifetime: 20
   explosionPrefab: {fileID: 9218443758430896778, guid: b66adedf4df8ec84084cbac8e30b6018, type: 3}
