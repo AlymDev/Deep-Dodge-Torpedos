@@ -1,22 +1,25 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class HomingTorpedo : MonoBehaviour
 {
     [Header("Torpedo Settings")]
     public float speed = 6f;
-    [Header("Type Info")]
-    public string typeName = "Normal";
-    public Color warningColor = Color.white; // used for the warning arrows in Week 10
     public float rotateSpeed = 90f;
     public float lifetime = 20f;
-
     public GameObject explosionPrefab;
+
+    [Header("Type Info")]
+    public string typeName = "Normal";
+    public Color warningColor = Color.white;
+
+    // Used by the slow-motion power-up (1 = normal)
+    public static float SpeedScale = 1f;
+
+    public static readonly List<HomingTorpedo> Active = new List<HomingTorpedo>();
 
     private Transform player;
     private bool exploded;
-
-    public static readonly List<HomingTorpedo> Active = new List<HomingTorpedo>();
 
     void OnEnable()  { Active.Add(this); }
     void OnDisable() { Active.Remove(this); }
@@ -31,9 +34,11 @@ public class HomingTorpedo : MonoBehaviour
 
     void Update()
     {
+        float currentSpeed = speed * SpeedScale;
+
         if (player == null)
         {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+            transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime, Space.Self);
             return;
         }
 
@@ -44,10 +49,19 @@ public class HomingTorpedo : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.RotateTowards(
-                transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+                transform.rotation, targetRotation, rotateSpeed * SpeedScale * Time.deltaTime);
         }
 
-        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+        transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime, Space.Self);
+    }
+
+    // Called by the EMP
+    public void Detonate()
+    {
+        if (exploded) return;
+        exploded = true;
+        SpawnExplosion();
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,6 +70,17 @@ public class HomingTorpedo : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
+            // Shield absorbs the hit: only the torpedo is destroyed
+            PlayerPowerUps powerUps = other.GetComponentInParent<PlayerPowerUps>();
+            if (powerUps != null && powerUps.TryAbsorbHit())
+            {
+                exploded = true;
+                SpawnExplosion();
+                if (CameraShake.Instance != null) CameraShake.Instance.Shake(0.15f, 0.2f);
+                Destroy(gameObject);
+                return;
+            }
+
             exploded = true;
             Debug.Log("Hit Player!");
 
@@ -63,15 +88,15 @@ public class HomingTorpedo : MonoBehaviour
             if (CameraShake.Instance != null) CameraShake.Instance.Shake(0.3f, 0.4f);
             SpawnExplosion();
 
-            Destroy(other.gameObject); // submarine
-            Destroy(gameObject);       // this torpedo
+            Destroy(other.gameObject);
+            Destroy(gameObject);
         }
         else if (other.CompareTag("Torpedo"))
         {
             HomingTorpedo otherTorpedo = other.GetComponent<HomingTorpedo>();
             if (otherTorpedo != null)
             {
-                if (otherTorpedo.exploded) return; // the other one already handled it
+                if (otherTorpedo.exploded) return;
                 otherTorpedo.exploded = true;
             }
 
@@ -86,11 +111,11 @@ public class HomingTorpedo : MonoBehaviour
     }
 
     private void SpawnExplosion()
-{
-    if (explosionPrefab != null)
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+    {
+        if (explosionPrefab != null)
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-    if (AudioManager.Instance != null)
-        AudioManager.Instance.PlayExplosion();
-}
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayExplosion();
+    }
 }

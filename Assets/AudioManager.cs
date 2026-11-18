@@ -10,6 +10,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip gameOverClip;
     public AudioClip musicClip;
 
+    public AudioClip powerUpClip;
+    public float powerUpStartOffset = 0f;
+
     [Header("Skip the start of each clip (seconds)")]
     public float explosionStartOffset = 1f;
     public float coinStartOffset = 1f;
@@ -60,6 +63,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlayExplosion() { Play(explosionClip, explosionStartOffset); }
     public void PlayCoin()      { Play(coinClip, coinStartOffset); }
+
+    public void PlayPowerUp() { Play(powerUpClip, powerUpStartOffset); }
     public void PlayGameOver()  { Play(gameOverClip, gameOverStartOffset); }
 
     void Play(AudioClip clip, float startOffset)
